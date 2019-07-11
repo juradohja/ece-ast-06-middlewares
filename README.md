@@ -1,24 +1,24 @@
----
----
+### ECE Paris | Asynchronous Server Technologies
 
-### ECE Paris
-### Asynchronous Server Technologies
+# Transpilation (Part 1)
 
-# NodeJS
-##### by: José Alberto Jurado
+This is part 1 of the third of a series of exercises done in the Asynchronous Server Technologies course 
+at ECE Paris, summer 2019. Continuing the development left at [ece-ast-02-dependency-management-express]('https://github.com/juradohja/ece-ast-02-dependency-management-express'),
+now we apply the use of transpilation to enhance code quality and readability, as well as to accelerate
+programming. This exercise uses TypeScript to transpile `.ts` files to `.js` files. To do so, the EJS and now
+TypeScript files were put into a `/src` folder, a `tsconfig.json` file was added,
+ and the TypeScript module was included in the dependencies.
+This implementation also uses nodemon.
 
----
+## Build
 
-## Introduction
-
-This is the first of a series of exercises done in the Asynchronous Server Technologies course 
-at ECE Paris, summer 2019. It consists of a very simple and basic web application built with NodeJS.
-It's purpose is to understand the basics of developing a web application with this tool, understanding 
-callback functions, routing, query parameters and modules.
+To build, simply execute `npm run build`.
 
 ## Run
 
-To run, simply execute `node index.js` and navigate to `localhost:8082/`. You may change the port at
+To run, simply execute `npm run start` and navigate to `localhost:8083/hello`. You may insert `name`
+ as a query parameter with any value to display it on the page. You may change the port at
 `index.js`.
 
+##### by: José Alberto Jurado and @inci90
 
