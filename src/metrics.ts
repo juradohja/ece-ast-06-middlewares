@@ -19,26 +19,39 @@ export class MetricsHandler {
     }
 
     public save(metric: Metric, callback: (err: Error | null, result?: any) => void) {
-        this.clientStart(function(client: any){
-          const db = client.db('mydb')
-          const collection = db.collection('documents')
-          // Insert some document
-          collection.insertOne( metric, function(err: any, result: any) {
-            if(err) return callback(err, result)
-            console.log("Document inserted into the collection")
-            client.close() // Close the connection
-            callback(err, result)
-          });
+        this.clientStart(function (client: any) {
+            const db = client.db('mydb')
+            const collection = db.collection('documents')
+            // Insert some document
+            collection.insertOne(metric, function (err: any, result: any) {
+                if (err) return callback(err, result)
+                console.log("Document inserted into the collection")
+                client.close() // Close the connection
+                callback(err, result)
+            });
         })
-      }
-    
+    }
+
     //maybe not static
-    static get(callback: (error: Error | null, result?: Metric[]) => void) {
-        const result = [
-            new Metric('2013-11-04 14:00 UTC', 12),
-            new Metric('2013-11-04 14:30 UTC', 15)
-        ]
-        callback(null, result)
+    public get(callback: (error: Error | null, result?: any) => void) {
+
+        this.clientStart(function (client: any) {
+
+            const db = client.db('mydb')
+
+            const collection = db.collection('documents');
+            // Find some documents
+            collection.find({}).toArray(function (err: any, docs: object) {
+                if (err) return callback(err, docs);
+                console.log("Found the following documents");
+                console.log(docs);
+                client.close() // Close the connection
+                callback(err, docs);
+            });
+
+
+        })
+
     }
 
 }
