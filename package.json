@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juradohja/ece-ast-04-storage.git"
+    "url": "git+https://github.com/juradohja/ece-ast-05-unit-testing.git"
   },
   "keywords": [
     "nodejs",
@@ -23,9 +23,9 @@
   "author": "José Alberto Jurado",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/juradohja/ece-ast-04-storage/issues"
+    "url": "https://github.com/juradohja/ece-ast-05-unit-testing/issues"
   },
-  "homepage": "https://github.com/juradohja/ece-ast-04-storage#readme",
+  "homepage": "https://github.com/juradohja/ece-ast-05-unit-testing#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^2.6.2",
