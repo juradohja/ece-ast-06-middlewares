@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 
 app.get('/metrics', (req: any, res: any) => {
   console.log("new get request");
-    new MetricsHandler().get((err: Error | null, result?: any) => {
+    new MetricsHandler().getAll((err: Error | null, result?: any) => {
         if (err) {
             throw err
         }

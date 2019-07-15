@@ -33,7 +33,7 @@ export class MetricsHandler {
     }
 
     //maybe not static
-    public get(callback: (error: Error | null, result?: any) => void) {
+    public getAll(callback: (error: Error | null, result?: any) => void) {
 
         this.clientStart(function (client: any) {
 
