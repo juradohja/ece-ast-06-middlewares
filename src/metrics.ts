@@ -76,7 +76,7 @@ export class MetricsHandler {
 
 
 
-    public get(value: number, callback: (error: Error | null, result?: any) => void) {
+    public get(value: any, callback: (error: Error | null, result?: any) => void) {
 
         this.clientStart(function (client: any) {
 

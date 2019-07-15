@@ -4,7 +4,8 @@ import clientStart from './db'
 
 var dbMet: MetricsHandler
 
-describe('Metrics', function() {
+describe('Metrics', () => {
+
   before(function() {
     clientStart(function(client: any) {
       client.db('mydb')
@@ -14,7 +15,26 @@ describe('Metrics', function() {
         client.close()
       })
     })
-
-    dbMet = new MetricsHandler()
+    dbMet = new MetricsHandler();
   })
-})
+
+  describe('#get', function() {
+    it('should get empty array', function() {
+      dbMet.get({value : 0}, function(err: Error | null, result?: Metric[]) {
+        expect(err).to.be.null
+        expect(result).to.not.be.undefined
+        expect(result).to.be.empty
+      })
+    })
+
+    it('should get empty array', function() {
+      dbMet.get({value : 0}, function(err: Error | null, result?: Metric[]) {
+        expect(err).to.be.null
+        expect(result).to.not.be.undefined
+        expect(result).to.be.empty
+      })
+    })
+  })
+}
+
+)
