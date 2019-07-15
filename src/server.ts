@@ -57,8 +57,6 @@ app.get(
 
 
 app.post('/metrics', (req: any, res: any) => {
-
-
     if(req.body.value){
         console.log("post request recieved");
       const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value));
@@ -71,6 +69,17 @@ app.post('/metrics', (req: any, res: any) => {
       return res.status(400).json({error: 'Wrong request parameter',});
     }
   })
+
+app.delete('/metrics', (req: any, res: any) => {
+
+  console.log("delete request recieved");
+  new MetricsHandler().delete(req.body.value, (err: any, result: any) => {
+    if (err)
+      return res.status(500).json({error: err, result: result});
+    res.status(201).json({error: err, result: true})
+  })
+
+})
 
 app.listen(port, (err: Error) => {
     if (err) {
