@@ -1,7 +1,7 @@
 {
-  "name": "ece-ast-031-transpilation-pt1",
+  "name": "ece-ast-04-storage",
   "version": "0.0.0",
-  "description": "Module 3.1 for the Asynchronous Server Technologies course at ECE Paris",
+  "description": "Module 4 for the Asynchronous Server Technologies course at ECE Paris",
   "main": "src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juradohja/ece-ast-031-transpilation-pt1.git"
+    "url": "git+https://github.com/juradohja/ece-ast-04-storage.git"
   },
   "keywords": [
     "nodejs",
@@ -22,14 +22,16 @@
   "author": "José Alberto Jurado",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/juradohja/ece-ast-031-transpilation-pt1/issues"
+    "url": "https://github.com/juradohja/ece-ast-04-storage/issues"
   },
-  "homepage": "https://github.com/juradohja/ece-ast-031-transpilation-pt1#readme",
+  "homepage": "https://github.com/juradohja/ece-ast-04-storage#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
+    "mongodb": "^3.2.7",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"

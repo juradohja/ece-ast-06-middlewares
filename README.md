@@ -1,14 +1,9 @@
 ### ECE Paris | Asynchronous Server Technologies
 
-# Transpilation (Part 1)
+# Storage
 
-This is part 1 of the third of a series of exercises done in the Asynchronous Server Technologies course 
-at ECE Paris, summer 2019. Continuing the development left at [ece-ast-02-dependency-management-express]('https://github.com/juradohja/ece-ast-02-dependency-management-express'),
-now we apply the use of transpilation to enhance code quality and readability, as well as to accelerate
-programming. This exercise uses TypeScript to transpile `.ts` files to `.js` files. To do so, the EJS and now
-TypeScript files were put into a `/src` folder, a `tsconfig.json` file was added,
- and the TypeScript module was included in the dependencies.
-This implementation also uses nodemon.
+This is the fourth of a series of exercises done in the Asynchronous Server Technologies course 
+at ECE Paris, summer 2019.
 
 ## Build
 
