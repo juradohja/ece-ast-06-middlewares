@@ -1,10 +1,10 @@
-import express = require('express')
+import express = require('express');
 
-const app = express()
-const port: string = process.env.PORT || '8083'
+const app = express();
+const port: string = process.env.PORT || '8083';
 
-const path = require('path')
-app.use(express.static(path.join(__dirname, 'public')));
+const path = require('path');
+app.use(express.static(path.join(__dirname, '/../public')));
 app.set('views', __dirname + "/views");
 app.set('view engine', 'ejs');
 
@@ -16,12 +16,12 @@ app.get('/metrics', (req: any, res: any) => {
         }
         res.json(result)
     })
-})
+});
 
 app.get('/', (req: any, res: any) => {
-    res.write('Hello world')
+    res.write('Hello world');
     res.end()
-})
+});
 
 app.get(
     '/hello',
@@ -37,4 +37,4 @@ app.listen(port, (err: Error) => {
         throw err
     }
     console.log(`server is listening on port ${port}`)
-})
+});

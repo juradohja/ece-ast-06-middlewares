@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include partials/head %>
+    <% include partials/head.ejs %>
+    <title>Hello!</title>
 </head>
 <body class="container">
 <div class="col-md-6 col-md-offset-3">
@@ -13,13 +14,13 @@
 </div>
 </body>
 <script>
-    $('#show-metrics').click((e) => {
+    $('#show-metrics').click(() => {
        // e.preventDefault();
         console.log("query before");
-    $.getJSON("../metrics.js", {}, (data) => {
+    $.getJSON("/metrics", {}, (data) => {
         console.log("query ");
         const content = data.map(d => {
-            return 'timestamp: '+d.timestamp+', value: '+d.value+'';
+            return 'timestamp: '+d.timestamp+', value: '+d.value+'<br>';
     })
     $('#metrics').append(content.join("\n"));
     });
