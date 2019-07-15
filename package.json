@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/tsc -p tsconfig.json",
     "start": "./node_modules/.bin/ts-node src/server.ts",
-    "dev": "./node_modules/.bin/nodemon"
+    "dev": "./node_modules/.bin/nodemon",
+    "db": "./node_modules/.bin/ts-node src/db.ts"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,6 @@
   "homepage": "https://github.com/juradohja/ece-ast-04-storage#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.3.1",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
