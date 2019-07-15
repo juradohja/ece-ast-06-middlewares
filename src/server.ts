@@ -15,7 +15,8 @@ app.set('views', __dirname + "/views");
 app.set('view engine', 'ejs');
 
 app.get('/metrics', (req: any, res: any) => {
-    MetricsHandler.get((err: Error | null, result?: any) => {
+  console.log("new get request");
+    new MetricsHandler().get((err: Error | null, result?: any) => {
         if (err) {
             throw err
         }
@@ -38,11 +39,13 @@ app.get(
 );
 
 //POST
+
+
 app.post('/metrics', (req: any, res: any) => {
 
 
     if(req.body.value){
-        console.log("something recieved");
+        console.log("post request recieved");
       const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value));
       new MetricsHandler().save(metric, (err: any, result: any) => {
         if (err)
