@@ -18,6 +18,26 @@ export class MetricsHandler {
         this.clientStart = clientStart
     }
 
+    public delete(value: number, callback: (err: Error | null, result?: any) => void) {
+        
+        this.clientStart(function (client: any) {
+
+            const db = client.db('mydb')
+
+            const collection = db.collection('documents');
+            // Find some documents
+            collection.deleteOne(value, function (err: any, result: any) {
+                if (err){
+                    return callback(err, result);
+                }
+                client.close(); // Close the connection
+            console.log("doc deleted");
+            callback(err, result);
+        })
+    })
+
+    }
+
     public save(metric: Metric, callback: (err: Error | null, result?: any) => void) {
         this.clientStart(function (client: any) {
             const db = client.db('mydb')
