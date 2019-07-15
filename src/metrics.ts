@@ -54,4 +54,27 @@ export class MetricsHandler {
 
     }
 
+
+
+    public get(value: number, callback: (error: Error | null, result?: any) => void) {
+
+        this.clientStart(function (client: any) {
+
+            const db = client.db('mydb')
+
+            const collection = db.collection('documents');
+            // Find some documents
+            collection.find({ "value": value }).toArray(function (err: any, docs: object) {
+                if (err) return callback(err, docs);
+                console.log("Found the following documents");
+                console.log(docs);
+                client.close() // Close the connection
+                callback(err, docs);
+            });
+
+
+        })
+
+    }
+
 }

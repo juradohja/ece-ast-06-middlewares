@@ -15,13 +15,28 @@ app.set('views', __dirname + "/views");
 app.set('view engine', 'ejs');
 
 app.get('/metrics', (req: any, res: any) => {
-  console.log("new get request");
+  if(req.query.value){
+    console.log("new GET single record request");
+
+    const value: number = parseInt(req.query.value);
+
+    new MetricsHandler().get(value, (err: Error | null, result?: any) => {
+      if (err) {
+          throw err
+      }
+      res.json(result)
+  })
+
+
+  }else{
+  console.log("new GET all records request");
     new MetricsHandler().getAll((err: Error | null, result?: any) => {
         if (err) {
             throw err
         }
         res.json(result)
     })
+  }//end else
 });
 
 app.get('/', (req: any, res: any) => {

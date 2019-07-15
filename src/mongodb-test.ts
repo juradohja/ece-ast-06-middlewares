@@ -31,9 +31,6 @@ const insertManyDocuments = function(db: any, callback: any) {
     });
   }
     
-  
-
-
 const insertDocument = function(db: any, callback: any) {
   // Get the documents collection
   const collection = db.collection('documents');
@@ -76,7 +73,6 @@ client.connect(function(err) {
   console.log("Connected successfully to server");
   const db = client.db(dbName);
 
-  
   insertDocument(db, function() {
     findDocuments(db, function() {
       client.close();
