@@ -39,7 +39,7 @@ app.get('/', function (req, res) {
 app.get('/hello', function (req, res) {
     process.stdout.write("Hello");
     var name = req.query.name;
-    res.status(200).render('hello.ejs', { name: name });
+    res.status(200).render('index.ejs', { name: name });
 });
 //POST
 app.post('/metrics', function (req, res) {
