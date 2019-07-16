@@ -207,3 +207,13 @@ app.delete('/metrics', (req: any, res: any) => {
   })
 
 })
+
+userRouter.delete('/', (req: any, res: any) => {
+  new UserHandler(db).delete(req.body.username, (err: any, result: any) => {
+    if (err)
+    return res.status(500).json({error: err, result: result});
+    res.status(201).json({error: err, result: true})
+  }
+  )
+
+})
