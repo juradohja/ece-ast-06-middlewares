@@ -117,11 +117,11 @@ userRouter.post('/', function (req: any, res: any, next: any) {
     dbUser.get(req.body.username, function (err: Error | null, result: User | null) {
         if (err) next(err)
         if (result) {
-            res.status(409).send("user already exists")
+            res.status(409).render('./error.ejs', {errorCode : 409})
         } else {
             dbUser.save(req.body, function (err: Error | null) {
                 if (err) next(err)
-                else res.status(201).send("user persisted")
+                else res.status(201).send("user persisted").redirect('/')
             })
         }
     })
