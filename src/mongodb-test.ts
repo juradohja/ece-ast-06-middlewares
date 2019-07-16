@@ -1,4 +1,3 @@
-import mongodb from 'mongodb'
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL

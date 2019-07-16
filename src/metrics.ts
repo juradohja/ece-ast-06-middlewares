@@ -13,23 +13,22 @@ export class Metric {
 export class MetricsHandler {
 
     private clientStart: any
+    private db: any
 
-    constructor() {
+    constructor(db) {
         this.clientStart = clientStart
+        this.db = db
     }
 
     public delete(value: any, callback: (err: Error | null, result?: any) => void) {
         
         this.clientStart(function (client: any) {
-
-            const db = client.db('mydb')
-            const collection = db.collection('documents');
+            const collection = this.db.collection('documents');
             // Find some documents
             collection.deleteOne({"value" : value}, function (err: any, result: any) {
                 if (err){
                     return callback(err, result);
                 }
-                client.close(); // Close the connection
             console.log("doc deleted");
             callback(err, result);
         })
@@ -39,13 +38,11 @@ export class MetricsHandler {
 
     public save(metric: Metric, callback: (err: Error | null, result?: any) => void) {
         this.clientStart(function (client: any) {
-            const db = client.db('mydb')
-            const collection = db.collection('documents')
+            const collection = this.db.collection('documents')
             // Insert some document
             collection.insertOne(metric, function (err: any, result: any) {
                 if (err) return callback(err, result)
                 console.log("Document inserted into the collection")
-                client.close() // Close the connection
                 callback(err, result)
             });
         })
@@ -55,16 +52,12 @@ export class MetricsHandler {
     public getAll(callback: (error: Error | null, result?: any) => void) {
 
         this.clientStart(function (client: any) {
-
-            const db = client.db('mydb')
-
-            const collection = db.collection('documents');
+            const collection = this.db.collection('documents');
             // Find some documents
             collection.find({}).toArray(function (err: any, docs: object) {
                 if (err) return callback(err, docs);
                 console.log("Found the following documents");
                 console.log(docs);
-                client.close() // Close the connection
                 callback(err, docs);
             });
 
@@ -79,15 +72,12 @@ export class MetricsHandler {
 
         this.clientStart(function (client: any) {
 
-            const db = client.db('mydb')
-
-            const collection = db.collection('documents');
+            const collection = this.db.collection('documents');
             // Find some documents
             collection.find({ "value": value }).toArray(function (err: any, docs: object) {
                 if (err) return callback(err, docs);
                 console.log("Found the following documents");
                 console.log(docs);
-                client.close() // Close the connection
                 callback(err, docs);
             });
 

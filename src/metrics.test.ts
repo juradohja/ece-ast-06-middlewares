@@ -1,25 +1,30 @@
 import { expect } from 'chai'
 import { Metric, MetricsHandler } from './metrics'
-import clientStart from './db'
+import mongodb from 'mongodb'
 
 var dbMet: MetricsHandler
-var metric: Metric
+var db: any
+var clientDb: any
+var metric : Metric
+
+var mongoAsync = (callback: any) => {
+  const MongoClient = mongodb.MongoClient // Create a new MongoClient
+  MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err: any, client: any) => {
+    if(err) throw err
+    callback(client)
+  });
+}
 
 describe('Metrics', () => {
 
-  before(function() {
-    //clear the db for tests
-    clientStart(function(client: any) {
-      client.db('mydb')
-        .collection('documents')
-        .deleteMany({},function(err:Error | null, result:any) {
-        if (err) throw err
-        client.close()
+      before((done) =>  {
+        mongoAsync((client: any) => {
+          clientDb = client
+          db = clientDb.db('mydb')
+          dbMet = new MetricsHandler(db)
+          done()
+        })
       })
-    })
-    dbMet = new MetricsHandler();
-
-  })
 
   describe('#save', function() {
     it('this will save a metric', function() {
@@ -71,15 +76,11 @@ describe('Metrics', () => {
   })
 
   after(function() {
-    //delete all records to clean up db
-    clientStart(function(client: any) {
-      client.db('mydb')
-        .collection('documents')
-        .deleteMany({},function(err:Error | null, result:any) {
-        if (err) throw err
-        client.close()
-      })
-    })
+    db.collection('documents')
+        .deleteMany({}, function(err : Error | null, result : any){
+          if (err) throw err
+          clientDb.close()
+        })
   });
 }
 

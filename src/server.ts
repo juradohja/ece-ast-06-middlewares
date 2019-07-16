@@ -20,7 +20,7 @@ app.get('/metrics', (req: any, res: any) => {
 
     const value: number = parseInt(req.query.value);
 
-    new MetricsHandler().get(value, (err: Error | null, result?: any) => {
+    new MetricsHandler(db).get(value, (err: Error | null, result?: any) => {
       if (err) {
           throw err
       }
@@ -30,7 +30,7 @@ app.get('/metrics', (req: any, res: any) => {
 
   }else{
   console.log("new GET all records request");
-    new MetricsHandler().getAll((err: Error | null, result?: any) => {
+    new MetricsHandler(db).getAll((err: Error | null, result?: any) => {
         if (err) {
             throw err
         }
@@ -60,7 +60,7 @@ app.post('/metrics', (req: any, res: any) => {
     if(req.body.value){
         console.log("post request recieved");
       const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value));
-      new MetricsHandler().save(metric, (err: any, result: any) => {
+      new MetricsHandler(db).save(metric, (err: any, result: any) => {
         if (err)
           return res.status(500).json({error: err, result: result});
         res.status(201).json({error: err, result: true})
@@ -73,7 +73,7 @@ app.post('/metrics', (req: any, res: any) => {
 app.delete('/metrics', (req: any, res: any) => {
 
   console.log("delete request recieved");
-  new MetricsHandler().delete(req.body.value, (err: any, result: any) => {
+  new MetricsHandler(db).delete(req.body.value, (err: any, result: any) => {
     if (err)
       return res.status(500).json({error: err, result: result});
     res.status(201).json({error: err, result: true})
@@ -81,9 +81,20 @@ app.delete('/metrics', (req: any, res: any) => {
 
 })
 
-app.listen(port, (err: Error) => {
-    if (err) {
-        throw err
-    }
-    console.log(`server is listening on port ${port}`)
+// Initialize connection once
+var db: any
+import mongodb from 'mongodb'
+const MongoClient = mongodb.MongoClient // Create a new MongoClient
+MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err: any, client: any) => {
+    if(err) throw err
+    db = client.db('mydb')
+
+    // Start the application after the database connection is ready
+    const port: string = process.env.PORT || '8085'
+    app.listen(port, (err: Error) => {
+        if (err) {
+            throw err
+        }
+        console.log(`server is listening on port ${port}`)
+    })
 });
