@@ -21,14 +21,14 @@ MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err
     })
 });
 
-
-
-
-
-
+//import morgan module for logging
+var morgan = require('morgan');
 
 const app = express();
 const port: string = process.env.PORT || '8083';
+
+//log all request in the Apache combined format to STDOU
+app.use(morgan('combined'))
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, '/../public')));
