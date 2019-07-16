@@ -60,16 +60,15 @@ describe('Metrics', () => {
         expect(result).to.not.be.empty
       })
     })
+  
+    it('test record was deleted', function() {
+      dbMet.get(30, function(err: Error | null, result?: Metric[]) {
+        expect(err).to.be.null
+        expect(result).to.not.be.undefined
+        expect(result).to.be.empty
+      })
+    })
   })
-
-  //   it('test record was deleted', function() {
-  //     dbMet.getAll(function(err: Error | null, result?: Metric[]) {
-  //       expect(err).to.be.null
-  //       expect(result).to.not.be.undefined
-  //       expect(result).to.not.be.empty
-  //     })
-  //   })
-  // })
 
   after(function() {
     //delete all records to clean up db
