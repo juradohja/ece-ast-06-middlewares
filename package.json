@@ -1,7 +1,7 @@
 {
   "name": "ece-ast-04-storage",
   "version": "0.0.0",
-  "description": "Module 4 for the Asynchronous Server Technologies course at ECE Paris",
+  "description": "Module 6 for the Asynchronous Server Technologies course at ECE Paris",
   "main": "src/server.ts",
   "scripts": {
     "test": "./node_modules/.bin/mocha -r ts-node/register src/**/*.test.ts",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/juradohja/ece-ast-05-unit-testing.git"
+    "url": "git+https://github.com/juradohja/ece-ast-06-middlewares.git"
   },
   "keywords": [
     "nodejs",
@@ -23,9 +23,9 @@
   "author": "José Alberto Jurado",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/juradohja/ece-ast-05-unit-testing/issues"
+    "url": "https://github.com/juradohja/ece-ast-06-middlewares/issues"
   },
-  "homepage": "https://github.com/juradohja/ece-ast-05-unit-testing#readme",
+  "homepage": "https://github.com/juradohja/ece-ast-06-middlewares#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^2.6.2",
