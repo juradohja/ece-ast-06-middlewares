@@ -18,15 +18,14 @@ export class MetricsHandler {
         this.clientStart = clientStart
     }
 
-    public delete(value: number, callback: (err: Error | null, result?: any) => void) {
+    public delete(value: any, callback: (err: Error | null, result?: any) => void) {
         
         this.clientStart(function (client: any) {
 
             const db = client.db('mydb')
-
             const collection = db.collection('documents');
             // Find some documents
-            collection.deleteOne(value, function (err: any, result: any) {
+            collection.deleteOne({"value" : value}, function (err: any, result: any) {
                 if (err){
                     return callback(err, result);
                 }
