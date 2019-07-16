@@ -12,8 +12,8 @@ export class Metric {
 
 export class MetricsHandler {
 
-    private clientStart: any
-    private db: any
+    private clientStart: any;
+    private db: any;
 
     constructor(db) {
         this.clientStart = clientStart

@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import { Metric, MetricsHandler } from './metrics'
-import mongodb from 'mongodb'
 
 var dbMet: MetricsHandler
 var db: any
@@ -8,7 +7,7 @@ var clientDb: any
 var metric : Metric
 
 var mongoAsync = (callback: any) => {
-  const MongoClient = mongodb.MongoClient // Create a new MongoClient
+  const MongoClient = require('mongodb').MongoClient // Create a new MongoClient
   MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err: any, client: any) => {
     if(err) throw err
     callback(client)
