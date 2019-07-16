@@ -61,8 +61,6 @@ export class MetricsHandler {
 
 
     public get(value: any, callback: (error: Error | null, result?: any) => void) {
-
-
             const collection = this.db.collection('documents');
             // Find some documents
             collection.find({ "value": value }).toArray(function (err: any, docs: object) {

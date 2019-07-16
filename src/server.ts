@@ -1,9 +1,10 @@
 import express = require('express');
 import bodyparser = require('body-parser');
-import { MetricsHandler, Metric } from './metrics'
+import passport = require('passport');
+import { MetricsHandler, Metric } from './metrics';
+import { User, UserHandler } from './user';
 
-
-// Initialize connection once
+const Strategy = require('passport-local').Strategy;
 
 var db: any;
 const mongodb = require('mongodb');
@@ -21,6 +22,23 @@ MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err
     })
 });
 
+passport.use(new Strategy(
+    function(username, password, done) {
+        new UserHandler(db).get(username, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false); }
+            if (!user.verifyPassword(password)) { return done(null, false); }
+            return done(null, user);
+        });
+    }
+));
+
+
+
+// Initialize connection once
+
+
+
 //import morgan module for logging
 var morgan = require('morgan');
 
@@ -36,8 +54,38 @@ app.use(express.static(path.join(__dirname, '/../public')));
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 app.set('views', __dirname + "/views");
 app.set('view engine', 'ejs');
+
+
+
+app.get('/', (req: any, res: any) => {
+    res.write('Hello world');
+    res.end()
+});
+
+app.get('/login', (req: any, res: any) => {
+    //render login page
+    res.end()
+});
+
+app.post('/login',
+    passport.authenticate('local', { failureRedirect : '/login'}),
+    function(req, res) {
+        res.redirect('/');
+    });
+
+app.get('/logout',
+    function(req: any, res : any){
+        req.logout();
+        res.redirect('/');
+    })
 
 app.get('/metrics', (req: any, res: any) => {
   if(req.query.value){
@@ -62,11 +110,6 @@ app.get('/metrics', (req: any, res: any) => {
         res.json(result)
     })
   }//end else
-});
-
-app.get('/', (req: any, res: any) => {
-    res.write('Hello world');
-    res.end()
 });
 
 app.get(
@@ -105,4 +148,3 @@ app.delete('/metrics', (req: any, res: any) => {
   })
 
 })
-
