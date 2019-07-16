@@ -32,6 +32,7 @@
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "mongodb": "^3.2.7",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
