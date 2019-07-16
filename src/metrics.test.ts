@@ -18,16 +18,17 @@ describe('Metrics', () => {
     dbMet = new MetricsHandler();
   })
 
-  describe('#get', function() {
-    it('should get empty array', function() {
-      dbMet.get({value : 0}, function(err: Error | null, result?: Metric[]) {
+  describe('#save', function() {
+    it('this will save some data', function() {
+      let metric = new Metric(new Date().getTime().toString(), 10);
+      dbMet.save(metric, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.be.empty
       })
     })
 
-    it('should get empty array', function() {
+    it('this will update existing data', function() {
       dbMet.get({value : 0}, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
