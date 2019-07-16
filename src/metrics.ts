@@ -1,4 +1,3 @@
-import clientStart from './db'
 export class Metric {
 
     public timestamp: string
@@ -12,17 +11,14 @@ export class Metric {
 
 export class MetricsHandler {
 
-    private clientStart: any;
     private db: any;
 
     constructor(db) {
-        this.clientStart = clientStart
         this.db = db
     }
 
     public delete(value: any, callback: (err: Error | null, result?: any) => void) {
         
-        this.clientStart(function (client: any) {
             const collection = this.db.collection('documents');
             // Find some documents
             collection.deleteOne({"value" : value}, function (err: any, result: any) {
@@ -32,12 +28,11 @@ export class MetricsHandler {
             console.log("doc deleted");
             callback(err, result);
         })
-    })
 
     }
 
     public save(metric: Metric, callback: (err: Error | null, result?: any) => void) {
-        this.clientStart(function (client: any) {
+        
             const collection = this.db.collection('documents')
             // Insert some document
             collection.insertOne(metric, function (err: any, result: any) {
@@ -45,13 +40,11 @@ export class MetricsHandler {
                 console.log("Document inserted into the collection")
                 callback(err, result)
             });
-        })
     }
 
     //maybe not static
     public getAll(callback: (error: Error | null, result?: any) => void) {
 
-        this.clientStart(function (client: any) {
             const collection = this.db.collection('documents');
             // Find some documents
             collection.find({}).toArray(function (err: any, docs: object) {
@@ -62,7 +55,6 @@ export class MetricsHandler {
             });
 
 
-        })
 
     }
 
@@ -70,7 +62,6 @@ export class MetricsHandler {
 
     public get(value: any, callback: (error: Error | null, result?: any) => void) {
 
-        this.clientStart(function (client: any) {
 
             const collection = this.db.collection('documents');
             // Find some documents
@@ -82,7 +73,6 @@ export class MetricsHandler {
             });
 
 
-        })
 
     }
 
