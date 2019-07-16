@@ -62,4 +62,17 @@ export class UserHandler {
                 callback(err)
             });
     }
+
+    public delete(username: string, callback: (err: Error | null, result: User | null) => void){
+        const collection = this.db.collection('users')
+        // Find some documents
+        collection.deleteOne({username: username}, function (err: any, result: any) {
+            if (err) return callback(err, result)
+            if (result)
+                callback(err, User.fromDb(username, result))
+            else
+                callback(err, null)
+        })
+
+    }
 }
