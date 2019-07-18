@@ -20,7 +20,8 @@
     $('#show-metrics').click(() => {
         // e.preventDefault();
         console.log("query before");
-        $.getJSON("/metrics", {}, (data, error) => {
+        var un = <%= username %>
+        $.getJSON("/metrics", {"username" : un}, (data, error) => {
             console.log("query ");
             const content = data.map(d => {
                 return 'timestamp: '+d.timestamp+', value: '+d.value+'<br>';

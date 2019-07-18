@@ -6,12 +6,13 @@ module.exports = function(db) {
 
     metricsRouter.get('/metrics', (req: any, res: any) => {
 
-        if (req.body.username && req.body.value) {
+        if (req.body.username) {
             console.log("new GET single record request");
 
             //const username: string = req.body.username;
 
-            new MetricsHandler(db).get(req.body.username, req.body.value, (err: Error | null, result?: any) => {
+           // new MetricsHandler(db).get(req.body.username, req.body.value, (err: Error | null, result?: any) => {
+            new MetricsHandler(db).getUserMetrics(req.body.username, (err: Error | null, result?: any) => {
                 if (err) {
                     throw err
                 }

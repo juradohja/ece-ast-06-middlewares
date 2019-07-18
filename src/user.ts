@@ -27,8 +27,8 @@ export class User {
 
     public setPassword(toSet: string): void {
         // Hash and set password
-        this.password = this.hashPassword(toSet);
-        //this.password = toSet;
+        //this.password = this.hashPassword(toSet);
+        this.password = toSet;
     }
 
     public getPassword(): string {
@@ -41,7 +41,8 @@ export class User {
 
     public validatePassword(toValidate: String): boolean {
         let hashed = this.hashPassword(toValidate);
-        return this.password === hashed;
+        //return this.password === hashed;
+        return this.password === toValidate;
     }
 
     private hashPassword(toHash: String): string {
