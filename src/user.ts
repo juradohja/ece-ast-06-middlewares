@@ -1,3 +1,5 @@
+import { randomBytes } from "crypto";
+
 const crypto = require('crypto');
 
 export class User {
@@ -10,15 +12,17 @@ export class User {
     constructor(username: string, email: string, password: string, passwordHashed: boolean = false) {
         this.username = username
         this.email = email
-        this.salt = "10";
+        this.salt = "10"
         if (!passwordHashed) {
             this.setPassword(password)
         } else this.password = password
     }
 
+    
+
     static fromDb(username: string, value: any): User {
         console.log(value)
-        return new User(username, value.email, value.password)
+        return new User(username, value.email, value.password, true)
     }
 
     public setPassword(toSet: string): void {
@@ -29,6 +33,10 @@ export class User {
 
     public getPassword(): string {
         return this.password
+    }
+
+    public getUsername(): string {
+        return this.username
     }
 
     public validatePassword(toValidate: String): boolean {
@@ -55,7 +63,7 @@ export class UserHandler {
     public get(username: string, callback: (err: Error | null, result: User | null) => void) {
         const collection = this.db.collection('users')
         // Find some documents
-        collection.findOne({username: username}, function (err: any, result: any) {
+        collection.findOne({username: username}, function (err: any, result: User) {
             if (err) return callback(err, result)
             if (result)
                 callback(err, User.fromDb(username, result))

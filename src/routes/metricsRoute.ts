@@ -8,7 +8,7 @@ module.exports = function(db) {
         if (req.query.value) {
             console.log("new GET single record request");
 
-            const value: number = parseInt(req.query.value);
+            const value: string = req.query.value;
 
             new MetricsHandler(db).get(value, (err: Error | null, result?: any) => {
                 if (err) {
@@ -30,7 +30,7 @@ module.exports = function(db) {
     metricsRouter.post('/metrics', (req: any, res: any) => {
         if (req.body.value) {
             console.log("post request recieved");
-            const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value), 10);
+            const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value), req.body.username);
             new MetricsHandler(db).save(metric, (err: any, result: any) => {
                 if (err)
                     return res.status(500).json({error: err, result: result});

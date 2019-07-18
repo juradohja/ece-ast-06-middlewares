@@ -2,12 +2,12 @@ export class Metric {
 
     public timestamp: string;
     public value: number;
-    public userID: number;
+    public username: string;
 
-    constructor(ts: string, v: number, u: number) {
+    constructor(ts: string, v: number, u: string) {
         this.timestamp = ts;
         this.value = v;
-        this.userID = u;
+        this.username = u;
     }
 }
 
@@ -56,17 +56,13 @@ export class MetricsHandler {
                 callback(err, docs);
             });
 
-
-
     }
 
-    public get(value: any, callback: (error: Error | null, result?: any) => void) {
+    public get(username: string, callback: (error: Error | null, result?: any) => void) {
             const collection = this.db.collection('documents');
             // Find some documents
-            collection.find({ "value": value }).toArray(function (err: any, docs: object) {
+            collection.find({ "username": username }).toArray(function (err: any, docs: object) {
                 if (err) return callback(err, docs);
-                console.log("Found the following documents");
-                console.log(docs);
                 callback(err, docs);
             });
 

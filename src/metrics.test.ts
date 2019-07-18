@@ -1,10 +1,12 @@
 import { expect } from 'chai'
 import { Metric, MetricsHandler } from './metrics'
+import { User } from './user';
 
 var dbMet: MetricsHandler
 var db: any
 var clientDb: any
 var metric : Metric
+var user : User
 
 var mongoAsync = (callback: any) => {
   const MongoClient = require('mongodb').MongoClient // Create a new MongoClient
@@ -21,6 +23,7 @@ describe('Metrics', () => {
           clientDb = client
           db = clientDb.db('mydb')
           dbMet = new MetricsHandler(db)
+          user= new User("testUser", "test@test.com", "password", false)
           done()
         })
       })
@@ -28,7 +31,7 @@ describe('Metrics', () => {
   describe('#save', function() {
     it('this will save a metric', function() {
       //creat the metric to save
-      metric = new Metric(new Date().getTime().toString(), 30, 10);
+      metric = new Metric(new Date().getTime().toString(), 30, user.getUsername());
       dbMet.save(metric, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
@@ -39,7 +42,7 @@ describe('Metrics', () => {
 
   describe('#get', function() {
     it('test the single record get func by fetching saved metric', function() {
-      dbMet.get(30, function(err: Error | null, result?: Metric[]) {
+      dbMet.get("testUser", function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.not.be.empty
@@ -66,7 +69,7 @@ describe('Metrics', () => {
     })
   
     it('test record was deleted', function() {
-      dbMet.get(30, function(err: Error | null, result?: Metric[]) {
+      dbMet.get("testuser", function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.be.empty
