@@ -1,15 +1,9 @@
 import express = require('express');
 import bodyparser = require('body-parser');
-import {MetricsHandler, Metric} from './metrics';
 import session = require('express-session');
 import ConnectMongo = require('connect-mongo');
+import {UserHandler} from './user';
 
-const MongoStore = ConnectMongo(session);
-import {User, UserHandler} from './user';
-
-const crypto = require('crypto');
-
-// const Strategy = require('passport-local').Strategy;
 
 let db: any;
 let dbUser: any;
@@ -18,8 +12,12 @@ let authRouter : any;
 let userRouter : any;
 let metricsRouter : any;
 
+const crypto = require('crypto');
+const morgan = require('morgan');
 const mongodb = require('mongodb');
+const MongoStore = ConnectMongo(session);
 const MongoClient = mongodb.MongoClient; // Create a new MongoClient
+// const Strategy = require('passport-local').Strategy;
 
 MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true}, (err: any, client: any) => {
     if (err) throw err;
@@ -43,17 +41,12 @@ MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true}, (err: 
     })
 });
 
-//import morgan module for logging
-const morgan = require('morgan');
-
 const app = express();
+const path = require('path');
 
 //log all request in the Apache combined format to STDOU
 app.use(morgan('combined'));
-
-const path = require('path');
 app.use(express.static(path.join(__dirname, '/../public')));
-
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
 
@@ -67,15 +60,8 @@ app.use(session({
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-
 app.set('views', __dirname + "/views");
 app.set('view engine', 'ejs');
-
-//
-// app.get('/', (req: any, res: any) => {
-//     res.write('Hello world');
-//     res.end();
-// });
 
 const authCheck = function (req: any, res: any, next: any) {
     if (req.session.loggedIn) {
@@ -83,11 +69,13 @@ const authCheck = function (req: any, res: any, next: any) {
     } else res.redirect('/login')
 };
 
+// Home Route
 app.get('/', authCheck, (req: any, res: any) => {
-    res.render('index.ejs', {name: req.params.name})
+    res.render('index.ejs', {
+        username: req.session.username,
+        name: req.params.name
+    })
 });
-
-
 
 app.get('/hello', (req: any, res: any) => {
         process.stdout.write("Hello");
@@ -96,6 +84,5 @@ app.get('/hello', (req: any, res: any) => {
     }
 );
 
-//POST
 
 

@@ -5,6 +5,7 @@ import {User, UserHandler} from '../user';
 module.exports = function(db, dbUser) {
     const userRouter = express.Router();
 
+    // Create User
     userRouter.post('/', function (req: any, res: any, next: any) {
         dbUser.get(req.body.username, function (err: Error | null, result: User | null) {
             if (err) next(err);
@@ -14,7 +15,11 @@ module.exports = function(db, dbUser) {
                 let user = new User(req.body.username, req.body.email, req.body.password, false);
                 dbUser.save(user, function (err: Error | null) {
                     if (err) next(err);
-                    else res.status(201).redirect('/')
+                    else {
+                        req.session.loggedIn = true;
+                        req.session.userRoute = user;
+                        res.status(201).redirect('/')
+                    }
                 })
             }
         })
