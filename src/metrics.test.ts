@@ -75,7 +75,7 @@ describe('Metrics', () => {
   })
 
   after(function() {
-    db.collection('documents')
+    db.collection('user')
         .deleteMany({}, function(err : Error | null, result : any){
           if (err) throw err
           clientDb.close()
