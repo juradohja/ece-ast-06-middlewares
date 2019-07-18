@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,700&display=swap');
+
+$primary : #8A4DF8;
+$link : #327120;
+$font-family-sans-serif : 'Raleway';
+
+@import "./_customVariables";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/mixins";

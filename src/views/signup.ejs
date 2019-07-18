@@ -1,19 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head.ejs %>
+    <title>Sign Up</title>
+</head>
+<body class="container bg-primary">
+<div class="row justify-content-md-center">
 <div id="form">
-    <p>Sign up for a new account</p>
+    <h2 class="text-center font-weight-bold text-white">Sign up</h2>
+    <h4 class="text-center text-white">Create an account in seconds</h4>
     <hr/>
-    <form action="/" method="post">
-        <div class="form-group">
-            <label for="form_email">Email</label>
-            <input id="form_email" type="email" name="email" />
+    <form action="/" method="post" class="text-white">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm" for="form_username">Email</label>
+            <div class="col-md-1"></div>
+            <div class="col-sm-9">
+                <input id="form_email" class="form-control form-control-sm" type="email" name="email" required/>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="form_username">Username</label>
-            <input id="form_username" type="text" name="username" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm" for="form_username">Username</label>
+            <div class="col-md-1"></div>
+            <div class="col-sm-9">
+                <input id="form_username" class="form-control form-control-sm" type="text" name="username" required/>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="form_password">Password</label>
-            <input id="form_password" type="password" name="password" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-sm" for="form_password">Password</label>
+            <div class="col-md-1"></div>
+            <div class="col-sm-9">
+                <input id="form_password" class="form-control form-control-sm" type="password" name="password" required/>
+            </div>
         </div>
-        <button class="btn btn-primary btn-block" type="submit" value="Submit">Create account</button>
+        <div class="form-group row">
+            <button class="btn btn-light btn-block col-sm-6" type="submit" value="Submit">Create account</button>
+        </div>
     </form>
 </div>
+</div>
+</body>
+</html>

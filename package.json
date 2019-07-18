@@ -8,7 +8,8 @@
     "build": "./node_modules/.bin/tsc -p tsconfig.json",
     "start": "./node_modules/.bin/ts-node src/server.ts",
     "dev": "./node_modules/.bin/nodemon",
-    "db": "./node_modules/.bin/ts-node src/db.ts"
+    "db": "./node_modules/.bin/ts-node src/db.ts",
+    "scss" : "node-sass src/scss -o public/css"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/juradohja/ece-ast-06-middlewares#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "connect-mongo": "^3.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
@@ -35,6 +37,7 @@
     "jquery": "^3.4.1",
     "mongodb": "^3.2.7",
     "morgan": "^1.9.1",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

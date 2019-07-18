@@ -1,19 +1,45 @@
-<div id="form">
-    <p>Please login to your account</p>
-    <hr/>
-    <form action="/login" method="post">
-        <div class="form-group">
-            <label for="form_username">Username</label>
-            <input id="form_username" type="text" name="username" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head.ejs %>
+    <title>Log In</title>
+</head>
+<body class="container bg-primary">
+<div class="row justify-content-md-center">
+    <div id="form">
+        <h2 class="text-center font-weight-bold text-white">Welcome!</h2>
+        <h3 class="text-center font-weight-medium text-white">Please login to your account</h3>
+        <hr/>
+        <form action="/login" method="post" class="text-white">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm" for="form_username">Username</label>
+                <div class="col-md-1"></div>
+                <div class="col-sm-9">
+                    <input id="form_username" class="form-control form-control-sm" type="text" name="username" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label col-form-label-sm" for="form_password">Password</label>
+                <div class="col-md-1"></div>
+                <div class="col-sm-9">
+                    <input id="form_password" class="form-control form-control-sm" type="password" name="password" required/>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <button class="col-sm-6 btn btn-light btn-block" type="submit" value="Submit">Connect</button>
+            </div>
+        </form>
+        <hr/><br>
+        <div class="row justify-content-md-center">
+            <small class="text-white">Don't have an account?</small>
         </div>
-        <div class="form-group">
-            <label for="form_password">Password</label>
-            <input id="form_password" type="password" name="password" />
+        <div class="row justify-content-md-center">
+            <button class="col-sm-6 align-self-end btn btn-success btn-block" type="submit" href="/signup"
+                    onClick='document.location.href="/signup"'>
+                Sign up
+            </button>
         </div>
-        <button class="btn btn-primary btn-block" type="submit" value="Submit">Connect</button>
-    </form>
-    <hr/>
-    <button class="btn btn-success btn-block" type="submit" href="/signup" onClick='document.location.href="/signup"'>
-        Create an account
-    </button>
+    </div>
 </div>
+</body>
+</html>
