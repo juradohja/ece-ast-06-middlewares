@@ -1,11 +1,13 @@
 export class Metric {
 
-    public timestamp: string
-    public value: number
+    public timestamp: string;
+    public value: number;
+    public userID: number;
 
-    constructor(ts: string, v: number) {
-        this.timestamp = ts
-        this.value = v
+    constructor(ts: string, v: number, u: number) {
+        this.timestamp = ts;
+        this.value = v;
+        this.userID = u;
     }
 }
 
@@ -33,11 +35,11 @@ export class MetricsHandler {
 
     public save(metric: Metric, callback: (err: Error | null, result?: any) => void) {
         
-            const collection = this.db.collection('documents')
+            const collection = this.db.collection('documents');
             // Insert some document
             collection.insertOne(metric, function (err: any, result: any) {
-                if (err) return callback(err, result)
-                console.log("Document inserted into the collection")
+                if (err) return callback(err, result);
+                console.log("Document inserted into the collection");
                 callback(err, result)
             });
     }
@@ -57,8 +59,6 @@ export class MetricsHandler {
 
 
     }
-
-
 
     public get(value: any, callback: (error: Error | null, result?: any) => void) {
             const collection = this.db.collection('documents');

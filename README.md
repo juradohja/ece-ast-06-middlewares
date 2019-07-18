@@ -19,5 +19,5 @@ To run, simply execute `npm run start` and navigate to `localhost:8083/hello`. Y
 
 To test, simply execute `npm run test`.
 
-##### by: José Alberto Jurado and Inci Kelleher
+##### by: José Alberto Jurado and Inci Keleher
 

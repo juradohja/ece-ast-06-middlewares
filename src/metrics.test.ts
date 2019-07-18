@@ -28,7 +28,7 @@ describe('Metrics', () => {
   describe('#save', function() {
     it('this will save a metric', function() {
       //creat the metric to save
-      metric = new Metric(new Date().getTime().toString(), 30);
+      metric = new Metric(new Date().getTime().toString(), 30, 10);
       dbMet.save(metric, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
@@ -75,7 +75,7 @@ describe('Metrics', () => {
   })
 
   after(function() {
-    db.collection('user')
+    db.collection('documents')
         .deleteMany({}, function(err : Error | null, result : any){
           if (err) throw err
           clientDb.close()
