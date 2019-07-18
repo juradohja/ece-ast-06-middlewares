@@ -50,16 +50,16 @@ export class UserHandler {
         })
     }
 
-    public save(user: User, callback: (err: Error | null) => void) {
+    public save(user: User, callback: (err: Error | null, result: any) => void) {
         const collection = this.db.collection('users')
         // Insert some document
         collection.insertOne(
             user,
             function(err: any, result: any) {
                 if(err)
-                    return callback(err)
+                    return callback(err, result)
                 console.log("User inserted into the collection")
-                callback(err)
+                callback(err, result)
             });
     }
 
