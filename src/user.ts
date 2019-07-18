@@ -5,11 +5,11 @@ const crypto = require('crypto');
 export class User {
     public username: string
     public email: string
-    private password: string = ""
+    private password: string
 
     protected salt: any;
 
-    constructor(username: string, email: string, password: string, passwordHashed: boolean = false) {
+    constructor(username: string, email: string, password: string, passwordHashed: boolean) {
         this.username = username
         this.email = email
         this.salt = "10"
@@ -27,8 +27,8 @@ export class User {
 
     public setPassword(toSet: string): void {
         // Hash and set password
-        // this.password = this.hashPassword(toSet);
-        this.password = toSet;
+        this.password = this.hashPassword(toSet);
+        //this.password = toSet;
     }
 
     public getPassword(): string {
@@ -41,10 +41,7 @@ export class User {
 
     public validatePassword(toValidate: String): boolean {
         let hashed = this.hashPassword(toValidate);
-        console.log("validating pass");
-        console.log(hashed.localeCompare(this.password));
-        console.log(this);
-        return this.password === toValidate;
+        return this.password === hashed;
     }
 
     private hashPassword(toHash: String): string {
