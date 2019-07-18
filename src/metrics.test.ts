@@ -32,7 +32,7 @@ describe('Metrics', () => {
     it('this will save a metric', function() {
       //creat the metric to save
       metric = new Metric(new Date().getTime().toString(), 30, user.getUsername());
-      dbMet.save(metric, function(err: Error | null, result?: Metric[]) {
+      dbMet.save("inci90", metric, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.not.be.empty
@@ -61,7 +61,7 @@ describe('Metrics', () => {
   describe('#delete', function() {
     it('this will delete a metric', function() {
       //creat the metric to save
-      dbMet.delete(30, function(err: Error | null, result?: Metric[]) {
+      dbMet.delete("inci", 30, function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.not.be.empty

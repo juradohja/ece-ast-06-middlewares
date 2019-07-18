@@ -25,6 +25,7 @@ module.exports = function(db, dbUser) {
         })
     });
 
+    /**
     userRouter.get('/:username', (req: any, res: any) => {
         dbUser.get(req.params.username, function (err: Error | null, result: User | null) {
             if (err || result === undefined) {
@@ -32,6 +33,7 @@ module.exports = function(db, dbUser) {
             } else res.status(200).json(result)
         })
     });
+    */
 
     userRouter.delete('/', (req: any, res: any) => {
         new UserHandler(db).delete(req.body.username, (err: any, result: any) => {
