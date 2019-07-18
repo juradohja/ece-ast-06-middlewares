@@ -9,7 +9,7 @@
     "start": "./node_modules/.bin/ts-node src/server.ts",
     "dev": "./node_modules/.bin/nodemon",
     "db": "./node_modules/.bin/ts-node src/db.ts",
-    "scss" : "node-sass src/scss -o public/css"
+    "scss": "node-sass src/scss -o public/css"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
+    "chart.js": "^2.8.0",
     "connect-mongo": "^3.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
