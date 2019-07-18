@@ -1,27 +1,16 @@
 import express = require('express');
 import session = require('express-session');
-
 import {User} from '../user';
 
 module.exports = function(dbUser) {
     const authRouter = express.Router();
 
+    // Render Login
     authRouter.get('/login', function (req: any, res: any) {
         res.render('login')
     });
 
-    authRouter.get('/signup', function (req: any, res: any) {
-        res.render('signup')
-    });
-
-    authRouter.get('/logout', function (req: any, res: any) {
-        if (req.session.loggedIn) {
-            delete req.session.loggedIn;
-            delete req.session.userRoute;
-        }
-        res.redirect('/login')
-    });
-
+    // Perform Login
     authRouter.post('/login', function (req: any, res: any, next: any) {
         dbUser.get(req.body.username, function (err: Error | null, result: User | null) {
             if (err) next(err);
@@ -37,6 +26,20 @@ module.exports = function(dbUser) {
                 res.redirect('/')
             }
         })
+    });
+
+    // Render SIGN UP
+    authRouter.get('/signup', function (req: any, res: any) {
+        res.render('signup')
+    });
+
+    // LOG OUT user
+    authRouter.get('/logout', function (req: any, res: any) {
+        if (req.session.loggedIn) {
+            delete req.session.loggedIn;
+            delete req.session.userRoute;
+        }
+        res.redirect('/login')
     });
 
     return authRouter;
