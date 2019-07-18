@@ -22,14 +22,24 @@ describe('Users', () => {
         clientDb = client
         db = clientDb.db('mydb')
         uHandler = new UserHandler(db)
+        user = new User("inci90", "inci90@github.com", "password", false);
         done()
       })
     })
 
+describe('#login user', function() {
+  it('test the password login and hashing functionality', function() {
+    expect(user.validatePassword("password")).to.be.true
+  })
+  it('testing change password function', function() {
+    user.setPassword("changed")
+    expect(user.validatePassword("changed")).to.be.true
+})
+})
+
 describe('#save user', function() {
   it('this will save a test user to the DB', function() {
     //creat the metric to save
-    user = new User("inci90", "inci90@github.com", "password", false);
     uHandler.save(user, function(err: Error | null, result?: User[]) {
       expect(err).to.be.null
       expect(result).to.not.be.undefined
@@ -49,7 +59,7 @@ describe('#get user', function() {
     })
   })
 
-  describe('#get user', function() {
+  describe('#delete user', function() {
     it('this will delete a user object from the DB', function() {
       //creat the metric to save
       uHandler.get("inci90", function(err: Error | null, result?: User) {
