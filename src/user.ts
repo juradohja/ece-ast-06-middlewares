@@ -10,7 +10,7 @@ export class User {
     constructor(username: string, email: string, password: string, passwordHashed: boolean = false) {
         this.username = username
         this.email = email
-        this.salt = crypto.randomBytes(16).toString('hex');
+        this.salt = "10";
         if (!passwordHashed) {
             this.setPassword(password)
         } else this.password = password
@@ -23,7 +23,8 @@ export class User {
 
     public setPassword(toSet: string): void {
         // Hash and set password
-        this.password = this.hashPassword(toSet);
+        // this.password = this.hashPassword(toSet);
+        this.password = toSet;
     }
 
     public getPassword(): string {
@@ -35,7 +36,7 @@ export class User {
         console.log("validating pass");
         console.log(hashed.localeCompare(this.password));
         console.log(this);
-        return this.password === hashed;
+        return this.password === toValidate;
     }
 
     private hashPassword(toHash: String): string {
