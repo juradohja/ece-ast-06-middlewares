@@ -27,7 +27,7 @@
             <div class="form-group row justify-content-md-center">
                 <div class="col-md-3 align-content-center">
                     <button id="show-metrics" type="button" class="btn btn-link">Display</button>
-                    <button type="input" class="btn btn-danger" onclick="deleteMetrics()">Delete metrics</button>
+                    <button type="input" class="btn btn-danger" onclick="deleteMetric()">Delete metrics</button>
                 </div>
             </div>
     </div>
@@ -118,7 +118,15 @@
     }
 
     function deleteMetric() {
-
+        var un = "<%= username%>"
+        $.ajax({
+            url: '/metrics',
+            type: 'DELETE',
+            data: {username: un},
+            success: function(response) {
+                fetchData();
+            }
+        });
     }
 
     function formatDate(timestamp) {
