@@ -36,7 +36,7 @@ MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true}, (err: 
     app.use(metricsRouter);
 
     // Start the application after the database connection is ready
-    const port: string = process.env.PORT || '8085';
+    const port: string = process.env.PORT || '8086';
     app.listen(port, (err: Error) => {
         if (err) {
             throw err

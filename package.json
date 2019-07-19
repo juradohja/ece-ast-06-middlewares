@@ -1,7 +1,7 @@
 {
-  "name": "ece-ast-04-storage",
+  "name": "ece-ast-06-middlewares",
   "version": "0.0.0",
-  "description": "Module 6 for the Asynchronous Server Technologies course at ECE Paris",
+  "description": "Module 6 of the Asynchronous Server Technologies course at ECE Paris",
   "main": "src/server.ts",
   "scripts": {
     "test": "./node_modules/.bin/mocha -r ts-node/register src/**/*.test.ts",
@@ -19,8 +19,10 @@
   "keywords": [
     "nodejs",
     "express",
-    "transpilation",
-    "typescript"
+    "typescript",
+    "mongodb",
+    "web",
+    "ece"
   ],
   "author": "José Alberto Jurado",
   "license": "ISC",

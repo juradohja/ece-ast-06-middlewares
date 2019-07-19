@@ -7,28 +7,22 @@ module.exports = function(db) {
     metricsRouter.get('/metrics', (req: any, res: any) => {
         if(req.session.loggedIn) {
             if (req.query.username) {
-                console.log("new GET single record request");
-
-                //const username: string = req.body.username;
-
-                // new MetricsHandler(db).get(req.body.username, req.body.value, (err: Error | null, result?: any) => {
+                // Single User Get Request
                 new MetricsHandler(db).getUserMetrics(req.query.username, (err: Error | null, result?: any) => {
                     if (err) {
                         throw err
                     }
-                    console.log("printing record");
-                    console.log(result[0].metrics);
                     res.json(result[0].metrics)
                 })
             } else {
-                console.log("new GET all records request");
+                // All Users Get Request
                 new MetricsHandler(db).getAll((err: Error | null, result?: any) => {
                     if (err) {
                         throw err
                     }
                     res.json(result)
                 })
-            }//end else
+            }
         } else {
             res.status(401).send("Unauthorized access");
         }
@@ -37,7 +31,6 @@ module.exports = function(db) {
     metricsRouter.post('/metrics', (req: any, res: any) => {
         if(req.session.loggedIn) {
             if (req.body.value) {
-                console.log("post request recieved");
                 const metric = new Metric(new Date().getTime().toString(), parseInt(req.body.value), req.body.username);
                 new MetricsHandler(db).save(req.body.username, metric, (err: any, result: any) => {
                     if (err)
