@@ -58,7 +58,7 @@
 
         metricsArr.forEach((item) => {
             var date = new Date(item.timestamp);
-            labelsArray.push(date.toString());
+            labelsArray.push(formatDate(date));
             valuesArray.push(item.value);
             backgroundColorsArray.push('#5c9834');
             borderColorsArray.push('#275618');
@@ -113,6 +113,17 @@
                 fetchData();
             }
         });
+    }
+
+    function formatDate(d) {
+        var dt = new Date(d);
+        var day = dt.getDate();
+        var month = dt.getMonth();
+        var year = dt.getFullYear();
+        var hours = dt.getHours();
+        var minutes = dt.getMinutes();
+        var seconds = dt.getSeconds();
+        return month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
     }
 </script>
 </html>

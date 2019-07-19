@@ -9,6 +9,7 @@ Express, TypeScript, and MongoDB. It also integrates Nodemon, Travis and Sass.
 
 ## Build
 
+Make sure you have npm installed by executing `npm install` in your directory.
 To build, simply execute `npm run build`. You may also execute `npm run scss` to
 compile `.scss` files.
 
