@@ -10,6 +10,10 @@ var metric: Metric
 var user: User
 var uHandler: UserHandler
 
+/**
+ * Database connection code
+ * @param callback 
+ */
 var mongoAsync = (callback: any) => {
   const MongoClient = require('mongodb').MongoClient // Create a new MongoClient
   MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true }, (err: any, client: any) => {
@@ -18,6 +22,11 @@ var mongoAsync = (callback: any) => {
   });
 }
 
+/**
+ * This tests the metrics handling functions by creating a user
+ * then creating metrics and saving, fetching and deleting the metric
+ * for that user
+ */
 describe('Metrics', () => {
 
   before((done) => {
@@ -27,8 +36,7 @@ describe('Metrics', () => {
       dbMet = new MetricsHandler(db)
       user = new User("testUser", "test@test.com", "password", false)
       uHandler = new UserHandler(db)
-
-      //save the test user
+      //save the test-user
       uHandler.save(user, function (err: Error | null, result?: User[]) {
         expect(err).to.be.null
       })
@@ -71,6 +79,9 @@ describe('Metrics', () => {
 
   })
 
+  /**
+   * close the connection
+   */
   after(function () {
     db.collection('users')
       .deleteMany({}, function (err: Error | null, result: any) {

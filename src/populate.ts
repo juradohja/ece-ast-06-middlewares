@@ -20,6 +20,9 @@ var mongoAsync = (callback: any) => {
   });
 }
 
+/**
+ * Populate the db with two new users
+ */
 describe('Users', () => {
 
     before((done) =>  {
@@ -34,10 +37,11 @@ describe('Users', () => {
       })
     })
 
-
+/**
+ * save the users to the DB
+ */
 describe('#save user', function() {
   it('this will save user1 to the DB', function() {
-    //creat the metric to save
     uHandler.save(user1, function(err: Error | null, result?: User[]) {
       expect(err).to.be.null
       expect(result).to.not.be.undefined
@@ -45,7 +49,6 @@ describe('#save user', function() {
     })
   })
   it('this will save user2 to the DB', function() {
-    //creat the metric to save
     uHandler.save(user2, function(err: Error | null, result?: User[]) {
       expect(err).to.be.null
       expect(result).to.not.be.undefined
@@ -54,6 +57,9 @@ describe('#save user', function() {
   })
 })
 
+/**
+ * create two test metrics for each user and save them
+ */
 describe('#save metric', function() {
     it('this will save a metric', function() {
       //creat the metric to save
