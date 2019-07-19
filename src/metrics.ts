@@ -21,11 +21,13 @@ export class MetricsHandler {
         this.db = db
     }
 
-    public delete(username: string, callback: (err: Error | null, result?: any) => void) {
+    public delete(un: string, callback: (err: Error | null, result?: any) => void) {
         
             const collection = this.db.collection('users');
             // Find some documents
-            collection.updateOne( {"username" : username}, {$pop: { metric: {"value": 1}}}, function (err: any, result: any) {
+            console.log("delete method");
+            console.log(un);
+            collection.updateOne({username : un}, {$pop : {"metrics" : 1}}, function (err: any, result: any) {
                 if (err){
                     return callback(err, result);
                 }

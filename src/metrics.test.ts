@@ -42,7 +42,7 @@ describe('Metrics', () => {
 
   describe('#get', function() {
     it('test the single record get func by fetching saved metric', function() {
-      dbMet.get("testUser", function(err: Error | null, result?: Metric[]) {
+      dbMet.getUserMetrics("testUser", function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.not.be.empty
@@ -61,7 +61,7 @@ describe('Metrics', () => {
   describe('#delete', function() {
     it('this will delete a metric', function() {
       //creat the metric to save
-      dbMet.delete("inci", 30, function(err: Error | null, result?: Metric[]) {
+      dbMet.delete("inci", function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.not.be.empty
@@ -69,7 +69,7 @@ describe('Metrics', () => {
     })
   
     it('test record was deleted', function() {
-      dbMet.get("testuser", function(err: Error | null, result?: Metric[]) {
+      dbMet.getUserMetrics("testuser", function(err: Error | null, result?: Metric[]) {
         expect(err).to.be.null
         expect(result).to.not.be.undefined
         expect(result).to.be.empty
