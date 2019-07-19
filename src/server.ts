@@ -72,8 +72,8 @@ const authCheck = function (req: any, res: any, next: any) {
 // Home Route
 app.get('/', authCheck, (req: any, res: any) => {
     res.render('index.ejs', {
-        username: req.session.username,
-        email: req.session.email
+        username: req.session.userRoute.username,
+        email: req.session.userRoute.email
     })
 });
 

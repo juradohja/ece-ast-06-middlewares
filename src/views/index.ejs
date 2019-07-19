@@ -17,49 +17,69 @@
         <form method="post" action="/metrics">
             <div class="form-group row justify-content-md-center">
                 <label for="inputValue" class="col-sm-2 col-form-label">Metric value</label>
-                <input hidden type="text" id="inputUsername" name="username" value=<%= username%>>
+                <input hidden type="text" id="inputUsername" name="username" value="<%= username%>">
                 <div class="col-sm-5">
                     <input type="number" class="form-control" id="inputValue" name="value">
                 </div>
                 <button type="submit" class="col-sm-2 btn btn-primary mb-2">Submit</button>
             </div>
         </form>
-        <form method="delete" action="/metrics" style="margin-top: 15vh">
             <div class="form-group row justify-content-md-center">
                 <div class="col-md-3 align-content-center">
-                    <button type="input" class="btn btn-danger">Delete metrics</button>
+                    <button id="show-metrics" type="button" class="btn btn-link">Display</button>
+                    <button type="input" class="btn btn-danger" onclick="deleteMetrics()">Delete metrics</button>
                 </div>
             </div>
-        </form>
     </div>
 </div>
 </body>
 <script>
+
+    var metricsArr;
+
     $(document).ready(() => {
+        metricsArr = [];
+        fetchData();
+    });
+
+    $('#show-metrics').click(() => {
+        startGraph();
+    });
+
+    function startGraph() {
+        console.log("starting graph");
+        console.log(metricsArr);
+        console.log(metricsArr[4]);
+
+        var labelsArray = [];
+        var valuesArray = [];
+        var backgroundColorsArray = [];
+        var borderColorsArray = [];
+
+        metricsArr.forEach((item) => {
+            console.log("for each");
+            console.log(item);
+            var date = new Date(item.timestamp);
+            labelsArray.push(date.toString());
+            valuesArray.push(item.value);
+            backgroundColorsArray.push('#5c9834');
+            borderColorsArray.push('#275618');
+            console.log(item);
+        });
+
+        console.log(labelsArray);
+        console.log("labelsArray");
+
         var ctx = $('#myChart');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: labelsArray,
                 datasets: [{
                     label: "",
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    data: valuesArray,
+                    backgroundColor: backgroundColorsArray,
+                    borderColor: borderColorsArray,
                     borderWidth: 1
                 }]
             },
@@ -74,20 +94,57 @@
                 maintainAspectRatio : true
             }
         });
-    })
+    };
 
-    $('#show-metrics').click(() => {
-        // e.preventDefault();
+    function fetchData() {
+        metricsArr = [];
         console.log("query before");
-        var un = <%= username %>
+        console.log(metricsArr);
+        var un = "<%= username%>";
         $.getJSON("/metrics", {"username" : un}, (data, error) => {
             console.log("query ");
-            const content = data.map(d => {
-                return 'timestamp: '+d.timestamp+', value: '+d.value+'<br>';
+            data.map(d => {
+                console.log("logging d");
+                console.log(d);
+                metricsArr.push({
+                    "timestamp" : parseInt(d.timestamp),
+                    "value" : d.value
+                });
+                console.log(metricsArr);
             })
-            $('#metrics').append(content.join("\n"));
-            console.log(content);
+            console.log("metrics here");
+            console.log(metricsArr);
         });
-    })
+    }
+
+    function deleteMetric() {
+
+    }
+
+    function formatDate(timestamp) {
+        const dateObj = new Date(timestamp * 1000);
+        const month = date.getMonth()+1;
+            datevalues = [
+                date.getFullYear(),
+                date.getMonth()+1,
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+            ];
+        return "";
+    }
+
+    function getFormattedDate(d) {
+        try {
+            const date = new Date(d);
+            const month = this.appendLeadingZeroes(date.getMonth() + 1);
+            const day = this.appendLeadingZeroes(date.getDate());
+            const year = this.appendLeadingZeroes(date.getFullYear());
+            return year + "/" + month + "/" + day;
+        } catch (e) {
+            return "";
+        }
+    }
 </script>
 </html>

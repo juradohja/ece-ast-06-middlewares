@@ -21,11 +21,11 @@ export class MetricsHandler {
         this.db = db
     }
 
-    public delete(username: string, value: any, callback: (err: Error | null, result?: any) => void) {
+    public delete(username: string, callback: (err: Error | null, result?: any) => void) {
         
             const collection = this.db.collection('users');
             // Find some documents
-            collection.updateOne( {"username" : username}, {$pull: { metric: {"value": value}}}, function (err: any, result: any) {
+            collection.updateOne( {"username" : username}, {$pop: { metric: {"value": 1}}}, function (err: any, result: any) {
                 if (err){
                     return callback(err, result);
                 }
@@ -38,7 +38,8 @@ export class MetricsHandler {
     public save(username: string, metric: Metric, callback: (err: Error | null, result?: any) => void) {
         
             const collection = this.db.collection('users')
-
+            console.log("username");
+            console.log(username);
             //locate a user from the database and append a metric to that user entry
             collection.updateOne( {"username" : username}, {$push: {"metrics": metric}}, function (err: any, result: any) {
                 if (err) return callback(err, result);

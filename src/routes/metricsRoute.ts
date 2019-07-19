@@ -5,18 +5,18 @@ module.exports = function(db) {
     const metricsRouter = express.Router();
 
     metricsRouter.get('/metrics', (req: any, res: any) => {
-
-        if (req.body.username) {
+        if (req.query.username) {
             console.log("new GET single record request");
 
             //const username: string = req.body.username;
 
            // new MetricsHandler(db).get(req.body.username, req.body.value, (err: Error | null, result?: any) => {
-            new MetricsHandler(db).getUserMetrics(req.body.username, (err: Error | null, result?: any) => {
+            new MetricsHandler(db).getUserMetrics(req.query.username, (err: Error | null, result?: any) => {
                 if (err) {
                     throw err
                 }
                 console.log("printing record");
+                console.log(result[0].metrics);
                 res.json(result[0].metrics)
             })
         } else {
@@ -37,7 +37,7 @@ module.exports = function(db) {
             new MetricsHandler(db).save(req.body.username, metric, (err: any, result: any) => {
                 if (err)
                     return res.status(500).json({error: err, result: result});
-                res.status(201).json({error: err, result: true})
+                res.status(201).redirect('/');
             })
         } else {
             return res.status(400).json({error: 'Wrong request parameter',});
@@ -46,10 +46,10 @@ module.exports = function(db) {
 
     metricsRouter.delete('/metrics', (req: any, res: any) => {
         console.log("delete request recieved");
-        new MetricsHandler(db).delete(req.body.username, req.body.value, (err: any, result: any) => {
+        new MetricsHandler(db).delete(req.body.username, (err: any, result: any) => {
             if (err)
                 return res.status(500).json({error: err, result: result});
-            res.status(201).json({error: err, result: true})
+            res.status(201).redirect('/');
         })
     });
 
