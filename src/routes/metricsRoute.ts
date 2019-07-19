@@ -14,14 +14,6 @@ module.exports = function(db) {
                     }
                     res.json(result[0].metrics)
                 })
-            } else {
-                // All Users Get Request
-                new MetricsHandler(db).getAll((err: Error | null, result?: any) => {
-                    if (err) {
-                        throw err
-                    }
-                    res.json(result)
-                })
             }
         } else {
             res.status(401).send("Unauthorized access");
@@ -47,12 +39,10 @@ module.exports = function(db) {
 
     metricsRouter.delete('/metrics', (req: any, res: any) => {
         if(req.session.loggedIn) {
-            console.log("delete request recieved");
-            console.log(req.body.username);
             new MetricsHandler(db).delete(req.body.username, (err: any, result: any) => {
                 if (err)
                     return res.status(500).json({error: err, result: result});
-                res.status(201).redirect('/');
+                res.status(201).redirect('/logout');
             })
         } else {
             res.status(401).send("Unauthorized access");

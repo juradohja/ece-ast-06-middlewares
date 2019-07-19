@@ -35,7 +35,7 @@ module.exports = function(dbUser) {
             delete req.session.loggedIn;
             delete req.session.userRoute;
         }
-        res.redirect('/login')
+        res.redirect('/')
     });
 
     return authRouter;

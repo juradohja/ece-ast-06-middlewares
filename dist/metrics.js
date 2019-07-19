@@ -1,76 +1,70 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var db_1 = require("./db");
+/**
+ * Metric class contains data that a user can create/store/delete
+ */
 var Metric = /** @class */ (function () {
-    function Metric(ts, v) {
+    function Metric(ts, v, u) {
         this.timestamp = ts;
         this.value = v;
+        //username is deprecated and should be removed
+        //metrichandler functions will also need to be modified
+        this.username = u;
     }
     return Metric;
 }());
 exports.Metric = Metric;
+/**
+ * MetricsHandler class contains functions for deleting/saving/fetching metrics from db
+ */
 var MetricsHandler = /** @class */ (function () {
-    function MetricsHandler() {
-        this.clientStart = db_1.default;
+    function MetricsHandler(db) {
+        this.db = db;
     }
-    MetricsHandler.prototype.delete = function (value, callback) {
-        this.clientStart(function (client) {
-            var db = client.db('mydb');
-            var collection = db.collection('documents');
-            // Find some documents
-            collection.deleteOne(value, function (err, result) {
-                if (err) {
-                    return callback(err, result);
-                }
-                client.close(); // Close the connection
-                console.log("doc deleted");
-                callback(err, result);
-            });
+    /**
+     * Delete a metric from DB for a user
+     * @param un username of the metric owner
+     * @param callback
+     */
+    MetricsHandler.prototype.delete = function (un, callback) {
+        var collection = this.db.collection('users');
+        // Find some documents
+        collection.updateOne({ username: un }, { $pop: { "metrics": 1 } }, function (err, result) {
+            if (err) {
+                return callback(err, result);
+            }
+            console.log("doc deleted");
+            callback(err, result);
         });
     };
-    MetricsHandler.prototype.save = function (metric, callback) {
-        this.clientStart(function (client) {
-            var db = client.db('mydb');
-            var collection = db.collection('documents');
-            // Insert some document
-            collection.insertOne(metric, function (err, result) {
-                if (err)
-                    return callback(err, result);
-                console.log("Document inserted into the collection");
-                client.close(); // Close the connection
-                callback(err, result);
-            });
+    /**
+     * Save a metric to the DB
+     * @param username user that will own the metric
+     * @param metric metric to be saved
+     * @param callback sucess/error callback returns metric inserted
+     */
+    MetricsHandler.prototype.save = function (username, metric, callback) {
+        var collection = this.db.collection('users');
+        //locate a user from the database and append a metric to that user entry
+        collection.updateOne({ "username": username }, { $push: { "metrics": metric } }, function (err, result) {
+            if (err)
+                return callback(err, result);
+            console.log("Document inserted into the collection");
+            callback(err, result);
         });
     };
-    //maybe not static
-    MetricsHandler.prototype.getAll = function (callback) {
-        this.clientStart(function (client) {
-            var db = client.db('mydb');
-            var collection = db.collection('documents');
-            // Find some documents
-            collection.find({}).toArray(function (err, docs) {
-                if (err)
-                    return callback(err, docs);
-                console.log("Found the following documents");
-                console.log(docs);
-                client.close(); // Close the connection
-                callback(err, docs);
-            });
-        });
-    };
-    MetricsHandler.prototype.get = function (value, callback) {
-        this.clientStart(function (client) {
-            var db = client.db('mydb');
-            var collection = db.collection('documents');
-            // Find some documents
-            collection.find({ "value": value }).toArray(function (err, docs) {
-                if (err)
-                    return callback(err, docs);
-                console.log("Found the following documents");
-                console.log(docs);
-                client.close(); // Close the connection
-                callback(err, docs);
-            });
+    /**
+     * Fetch metrics from the database
+     * @param username user to fetch metrics for
+     * @param callback json doc of results
+     */
+    MetricsHandler.prototype.getUserMetrics = function (username, callback) {
+        var collection = this.db.collection('users');
+        collection.find({ username: username }, { metrics: 1, _id: 0 }).toArray(function (err, docs) {
+            if (err)
+                return callback(err, docs);
+            console.log(docs);
+            callback(err, docs);
         });
     };
     return MetricsHandler;
