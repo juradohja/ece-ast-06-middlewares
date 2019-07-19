@@ -38,7 +38,6 @@
     var metricsArr;
 
     $(document).ready(() => {
-        metricsArr = [];
         fetchData();
     });
 
@@ -47,9 +46,6 @@
     });
 
     function startGraph() {
-        console.log("starting graph");
-        console.log(metricsArr);
-        console.log(metricsArr[4]);
 
         var labelsArray = [];
         var valuesArray = [];
@@ -57,18 +53,12 @@
         var borderColorsArray = [];
 
         metricsArr.forEach((item) => {
-            console.log("for each");
-            console.log(item);
             var date = new Date(item.timestamp);
             labelsArray.push(date.toString());
             valuesArray.push(item.value);
             backgroundColorsArray.push('#5c9834');
             borderColorsArray.push('#275618');
-            console.log(item);
         });
-
-        console.log(labelsArray);
-        console.log("labelsArray");
 
         var ctx = $('#myChart');
         var myChart = new Chart(ctx, {
@@ -98,22 +88,14 @@
 
     function fetchData() {
         metricsArr = [];
-        console.log("query before");
-        console.log(metricsArr);
         var un = "<%= username%>";
         $.getJSON("/metrics", {"username" : un}, (data, error) => {
-            console.log("query ");
             data.map(d => {
-                console.log("logging d");
-                console.log(d);
                 metricsArr.push({
                     "timestamp" : parseInt(d.timestamp),
                     "value" : d.value
                 });
-                console.log(metricsArr);
             })
-            console.log("metrics here");
-            console.log(metricsArr);
         });
     }
 
@@ -127,32 +109,6 @@
                 fetchData();
             }
         });
-    }
-
-    function formatDate(timestamp) {
-        const dateObj = new Date(timestamp * 1000);
-        const month = date.getMonth()+1;
-            datevalues = [
-                date.getFullYear(),
-                date.getMonth()+1,
-                date.getDate(),
-                date.getHours(),
-                date.getMinutes(),
-                date.getSeconds(),
-            ];
-        return "";
-    }
-
-    function getFormattedDate(d) {
-        try {
-            const date = new Date(d);
-            const month = this.appendLeadingZeroes(date.getMonth() + 1);
-            const day = this.appendLeadingZeroes(date.getDate());
-            const year = this.appendLeadingZeroes(date.getFullYear());
-            return year + "/" + month + "/" + day;
-        } catch (e) {
-            return "";
-        }
     }
 </script>
 </html>

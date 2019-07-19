@@ -5,7 +5,7 @@ import {User, UserHandler} from '../user';
 module.exports = function(db, dbUser) {
     const userRouter = express.Router();
 
-    // Create User
+    // Create an User / Sign Up
     userRouter.post('/', function (req: any, res: any, next: any) {
         dbUser.get(req.body.username, function (err: Error | null, result: User | null) {
             if (err) next(err);
@@ -25,16 +25,7 @@ module.exports = function(db, dbUser) {
         })
     });
 
-    /**
-    userRouter.get('/:username', (req: any, res: any) => {
-        dbUser.get(req.params.username, function (err: Error | null, result: User | null) {
-            if (err || result === undefined) {
-                res.status(404).send("user not found")
-            } else res.status(200).json(result)
-        })
-    });
-    */
-
+    // Delete User
     userRouter.delete('/', (req: any, res: any) => {
         new UserHandler(db).delete(req.body.username, (err: any, result: any) => {
                 if (err)
@@ -43,7 +34,6 @@ module.exports = function(db, dbUser) {
             }
         )
     });
-
 
     return userRouter;
 }

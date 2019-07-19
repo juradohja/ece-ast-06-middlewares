@@ -15,25 +15,21 @@ module.exports = function(dbUser) {
         dbUser.get(req.body.username, function (err: Error | null, result: User | null) {
             if (err) next(err);
             if (result === null || !result.validatePassword(req.body.password)) {
-                console.log('login failed');
-                console.log(result);
-                console.log(req.session);
                 res.redirect('/login')
             } else {
                 req.session.loggedIn = true;
                 req.session.userRoute = result;
-                console.log('success login');
                 res.redirect('/')
             }
         })
     });
 
-    // Render SIGN UP
+    // Render Sign Up
     authRouter.get('/signup', function (req: any, res: any) {
         res.render('signup')
     });
 
-    // LOG OUT user
+    // Log Out an User
     authRouter.get('/logout', function (req: any, res: any) {
         if (req.session.loggedIn) {
             delete req.session.loggedIn;
