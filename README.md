@@ -23,5 +23,5 @@ You may change the port at `src/server.ts`.
 To test, simply execute `npm run test`. You may also execute `npm run populate` to
 populate your database with sample data.
 
-##### by: José Alberto Jurado and Inci Keleher
+##### by: José Alberto Jurado and Isaac Keleher
 
